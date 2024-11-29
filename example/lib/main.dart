@@ -2,12 +2,15 @@ import 'package:fancy_side_menu/fancy_side_menu.dart';
 import 'package:flutter/material.dart';
 
 void main(){
-  runApp(const MyApp());
+  final ScreenWrapperController controller = ScreenWrapperController();
+  runApp(MyApp(controller: controller));
 }
 
 class MyApp extends StatelessWidget {
 
-  const MyApp({super.key});
+  const MyApp({super.key, required this.controller});
+
+  final ScreenWrapperController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +33,12 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark
       ),
       home: ScreenWrapper(
+        controller: controller,
         scaffold: Scaffold(
           appBar: AppBar(title: Text('EXAMPLE'),),
           body: TextButton(
             onPressed: (){
-              ScreenWrapperController.of(context).showMenu();
+              controller.showMenu();
             },
             child: Text('CHECK')
           ),
