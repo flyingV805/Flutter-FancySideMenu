@@ -1,3 +1,4 @@
+import 'package:fancy_side_menu/fancy_side_menu.dart';
 import 'package:flutter/material.dart';
 
 void main(){
@@ -22,14 +23,30 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue,
-              brightness: Brightness.dark
+            seedColor: Colors.blue,
+            brightness: Brightness.dark
           ),
           useMaterial3: true,
           brightness: Brightness.dark
       ),
-      home: Scaffold(
-        appBar: AppBar(title: Text('EXAMPLE'),),
+      home: ScreenWrapper(
+        scaffold: Scaffold(
+          appBar: AppBar(title: Text('EXAMPLE'),),
+          body: TextButton(
+            onPressed: (){
+              ScreenWrapperController.of(context).showMenu();
+            },
+            child: Text('CHECK')
+          ),
+        ), 
+        sideMenu: Container(
+          color: Colors.blue,
+          child: const Column(
+            children: [
+              Text('sdfsdfsdfsdf')
+            ],
+          ),
+        )
       ),
     );
   }
