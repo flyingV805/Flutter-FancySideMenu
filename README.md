@@ -1,8 +1,7 @@
 # Fancy Side Menu
 
 Side menu with 3D effect for your application
-
-![Alt Text](/decor/demo.gif)
+<img src="/decor/demo.gif" width="400" />
 
 ## Getting started
 
