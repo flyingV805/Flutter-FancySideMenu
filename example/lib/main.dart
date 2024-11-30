@@ -43,13 +43,46 @@ class MyApp extends StatelessWidget {
             child: Text('CHECK')
           ),
         ), 
-        sideMenu: Container(
-          color: Colors.blue,
-          child: const Column(
-            children: [
-              Text('sdfsdfsdfsdf')
-            ],
-          ),
+        sideMenu: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            UserAccountsDrawerHeader(
+              decoration: const BoxDecoration(color: Colors.transparent),
+              currentAccountPicture: Container(decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(100)),),
+              accountName: const Text('Vlad Petrov'),
+              accountEmail: const Text('petrov.vladislav1992@gmail.com')
+            ),
+            
+            ListTile(
+              leading: Icon(Icons.access_time_filled),
+              title: Text('Some Time'),
+              onTap: (){},
+            ),
+
+            ListTile(
+              leading: Icon(Icons.access_time_filled),
+              title: Text('Some Time'),
+              onTap: (){},
+            ),
+            ListTile(
+              leading: Icon(Icons.access_time_filled),
+              title: Text('Some Time'),
+              onTap: (){},
+            ),
+            ListTile(
+              leading: Icon(Icons.access_time_filled),
+              title: Text('Some Time'),
+              onTap: (){},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.access_time_filled),
+              title: Text('Leave'),
+              onTap: (){},
+            )
+            
+            //Text('sdfsdfsdfsdf')
+          ],
         )
       ),
     );
