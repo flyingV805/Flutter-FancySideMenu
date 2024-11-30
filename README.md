@@ -1,6 +1,7 @@
 # Fancy Side Menu
 
 Side menu with 3D effect for your application
+<br/>
 <img src="/decor/demo.gif" width="400" />
 
 ## Getting started
