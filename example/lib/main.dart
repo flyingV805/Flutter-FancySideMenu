@@ -35,12 +35,33 @@ class MyApp extends StatelessWidget {
       home: ScreenWrapper(
         controller: controller,
         scaffold: Scaffold(
-          appBar: AppBar(title: Text('EXAMPLE'),),
-          body: TextButton(
-            onPressed: (){
-              controller.showMenu();
-            },
-            child: Text('CHECK')
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: (){
+                controller.showMenu();
+              },
+              icon: const Icon(Icons.menu)
+            ),
+            title: const Text('EXAMPLE'),
+            centerTitle: true,
+          ),
+          body: const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                SizedBox(height: 64),
+                Text("⤣", style: TextStyle(fontSize: 48)),
+                Wrap(
+                  children: [
+                    Text('Click on '),
+                    SizedBox(width: 8),
+                    Icon(Icons.menu),
+                    SizedBox(width: 8),
+                    Text('in AppBar to show the menu'),
+                  ],
+                )
+              ],
+            ),
           ),
         ), 
         sideMenu: Column(

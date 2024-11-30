@@ -75,6 +75,7 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
   @override
   Widget build(BuildContext context) {
     return Stack(
+      fit: StackFit.expand,
       children: [
         const Positioned.fill(
           child: ColoredBox(color: Colors.deepPurple/*Theme.of(context).cardColor*/ )
