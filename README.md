@@ -1,6 +1,6 @@
 # Fancy Side Menu
 
-Side menu with 3D effect for your application
+Side menu with 3D effect for your Flutter application
 <br/>
 <br/>
 <img src="/decor/demo.gif" width="400" />
