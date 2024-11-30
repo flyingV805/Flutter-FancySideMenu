@@ -20,6 +20,7 @@ const like = 'sample';
 ## Roadmap
 
 ✅ Width and background as parameters
+
 ⌛ GestureDetector for closing 
 
 ## Additional information
