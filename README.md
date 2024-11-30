@@ -2,7 +2,7 @@
 
 Side menu with 3D effect for your application
 <br/>
-<img src="/decor/demo.gif" width="400" />
+<img src="/decor/demo.gif" width="400" style="display: block; margin: auto;"/>
 
 ## Getting started
 
