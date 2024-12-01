@@ -17,22 +17,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Example',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.blue,
-              brightness: Brightness.light
-          ),
-          useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
           brightness: Brightness.light
+        ),
+        useMaterial3: true,
+        brightness: Brightness.light
       ),
       darkTheme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.blue,
-            brightness: Brightness.dark
-          ),
-          useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blue,
           brightness: Brightness.dark
+        ),
+        useMaterial3: true,
+        brightness: Brightness.dark
       ),
       home: ScreenWrapper(
+        backgroundColor: switch(Theme.of(context).brightness){
+          Brightness.dark => const Color(0xff290033),
+          Brightness.light => const Color(0xffe2a6fa),
+        },
         controller: controller,
         scaffold: Scaffold(
           appBar: AppBar(
@@ -70,13 +74,13 @@ class MyApp extends StatelessWidget {
             UserAccountsDrawerHeader(
               decoration: const BoxDecoration(color: Colors.transparent),
               currentAccountPicture: Container(decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(100)),),
-              accountName: const Text('Vlad Petrov'),
-              accountEmail: const Text('petrov.vladislav1992@gmail.com')
+              accountName: Text('Vlad Petrov', style: Theme.of(context).textTheme.titleMedium),
+              accountEmail: Text('petrov.vladislav1992@gmail.com', style: Theme.of(context).textTheme.bodyMedium)
             ),
             
             ListTile(
               leading: Icon(Icons.access_time_filled),
-              title: Text('Some Time'),
+              title: Text('Some Time', style: Theme.of(context).textTheme.titleMedium,),
               onTap: (){},
             ),
 

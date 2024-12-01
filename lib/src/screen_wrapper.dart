@@ -9,7 +9,7 @@ class ScreenWrapper extends StatefulWidget {
   final Scaffold scaffold;
   final Widget sideMenu;
   final double menuWidth;
-  final Color? backgroundColor;
+  final Color backgroundColor;
 
   const ScreenWrapper({
     super.key,
@@ -17,7 +17,7 @@ class ScreenWrapper extends StatefulWidget {
     required this.scaffold,
     required this.sideMenu,
     this.menuWidth = 264.0,
-    this.backgroundColor
+    this.backgroundColor = Colors.deepPurple
   });
 
   @override
@@ -67,6 +67,14 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
   }
 
   void hideMenu(){
+    _animController.reverse();
+    setState(() {
+      _isMenuOpened = false;
+    });
+  }
+
+  void menuAction(){
+    _animController.forward();
     setState(() {
       _isMenuOpened = false;
     });
@@ -74,45 +82,51 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        const Positioned.fill(
-          child: ColoredBox(color: Colors.deepPurple/*Theme.of(context).cardColor*/ )
-        ),
-        Positioned(
-          height: MediaQuery.of(context).size.height,
-          width: widget.menuWidth,
-          //duration: const Duration(milliseconds: 20),
-          left: (1 - _translateAnim.value) * -(widget.menuWidth),
-          child: Material(
-            color: Colors.deepPurple,
-            child: SafeArea(
-              child: widget.sideMenu
-            )
-          )
-        ),
-        Transform(
-          alignment: Alignment.center,
-          transform: Matrix4.identity()
-            ..setEntry(3, 2, .001)
-            ..rotateY(_pivotAnim.value),
-          //offset: Offset(_translateAnim.value * 200, 0),
-          child: Transform.translate(
-            offset: Offset(
-              _translateAnim.value * widget.menuWidth,
-              0
-            ),
-            child: Transform.scale(
-              scale: _scaleAnim.value,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(_translateAnim.value * 24),
-                child: widget.scaffold
-              )
-            ),
+    return GestureDetector(
+      onTapDown: _isMenuOpened ?(details){
+        final xPosition = details.globalPosition.dx;
+        if(xPosition >= widget.menuWidth) { hideMenu(); }
+      } : null,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Positioned.fill(
+            child: ColoredBox(color: widget.backgroundColor/*Theme.of(context).cardColor*/ )
           ),
-        )
-      ],
+          Positioned(
+            height: MediaQuery.of(context).size.height,
+            width: widget.menuWidth,
+            //duration: const Duration(milliseconds: 20),
+            left: (1 - _translateAnim.value) * -(widget.menuWidth),
+            child: Material(
+              color: widget.backgroundColor,
+              child: SafeArea(
+                child: widget.sideMenu
+              )
+            )
+          ),
+          Transform(
+            alignment: Alignment.center,
+            transform: Matrix4.identity()
+              ..setEntry(3, 2, .001)
+              ..rotateY(_pivotAnim.value),
+            //offset: Offset(_translateAnim.value * 200, 0),
+            child: Transform.translate(
+              offset: Offset(
+                _translateAnim.value * widget.menuWidth,
+                0
+              ),
+              child: Transform.scale(
+                scale: _scaleAnim.value,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(_translateAnim.value * 24),
+                  child: widget.scaffold
+                )
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
