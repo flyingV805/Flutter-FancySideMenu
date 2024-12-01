@@ -37,6 +37,7 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
   @override
   void initState() {
     widget.controller.connectState(this);
+
     _animController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 250)
@@ -55,11 +56,15 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
   }
 
   void showMenu(){
+    debugPrint('showMenu called $_isMenuOpened');
+    _animController.forward();
     _isMenuOpened = !_isMenuOpened;
     if(_isMenuOpened){
       _animController.forward();
+      debugPrint('showMenu called _animController forward');
     }else{
       _animController.reverse();
+      debugPrint('showMenu called _animController reverse');
     }
     /*setState(() {
       _isMenuOpened = !_isMenuOpened;
@@ -78,6 +83,14 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
     setState(() {
       _isMenuOpened = false;
     });
+  }
+
+  bool _handleBackLogic(){
+    if (_isMenuOpened){
+      hideMenu();
+      return true;
+    }
+    return false;
   }
 
   @override
