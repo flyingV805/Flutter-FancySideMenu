@@ -21,9 +21,10 @@ const like = 'sample';
 
 ✅ Width and background as parameters
 
+✅ 'Back' button handler
+
 ⚒️ GestureDetector for closing 
 
-⌛ 'Back' button handler
 
 ## Additional information
 

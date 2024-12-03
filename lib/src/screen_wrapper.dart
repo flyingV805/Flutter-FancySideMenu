@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:fancy_side_menu/src/screen_wrapper_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/change_notifier.dart';
 
 class ScreenWrapper extends StatefulWidget {
 
@@ -25,7 +26,7 @@ class ScreenWrapper extends StatefulWidget {
 
 }
 
-class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderStateMixin {
+class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderStateMixin implements PopEntry{
 
   bool _isMenuOpened = false;
 
@@ -52,26 +53,24 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
     _pivotAnim = Tween<double>(begin: 0, end: .5)
         .animate(CurvedAnimation(parent: _animController, curve: Curves.fastOutSlowIn));
 
+    canPopNotifier = ValueNotifier<bool>(_isMenuOpened);
+
     super.initState();
   }
 
   void showMenu(){
-    debugPrint('showMenu called $_isMenuOpened');
+    ModalRoute.of(context)?.registerPopEntry(this);
     _animController.forward();
-    _isMenuOpened = !_isMenuOpened;
-    if(_isMenuOpened){
-      _animController.forward();
-      debugPrint('showMenu called _animController forward');
-    }else{
-      _animController.reverse();
-      debugPrint('showMenu called _animController reverse');
-    }
+    setState(() {
+      _isMenuOpened = true;
+    });
     /*setState(() {
       _isMenuOpened = !_isMenuOpened;
     });*/
   }
 
   void hideMenu(){
+    ModalRoute.of(context)?.unregisterPopEntry(this);
     _animController.reverse();
     setState(() {
       _isMenuOpened = false;
@@ -95,6 +94,7 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTapDown: _isMenuOpened ?(details){
         final xPosition = details.globalPosition.dx;
@@ -147,6 +147,25 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
   void dispose() {
     _animController.dispose();
     super.dispose();
+  }
+
+  @override
+  late final ValueNotifier<bool> canPopNotifier;
+
+  @override
+  void onPopInvoked(bool didPop) {
+    if(_isMenuOpened){hideMenu();}
+    debugPrint('onPopInvoked $didPop');
+  }
+
+  @override
+  void onPopInvokedWithResult(bool didPop, result) {
+    if(_isMenuOpened){
+      hideMenu();
+      ModalRoute.of(context)?.unregisterPopEntry(this);
+      return;
+    }
+    //debugPrint('onPopInvokedWithResult $didPop');
   }
 
 }
