@@ -49,13 +49,14 @@ class MyApp extends StatelessWidget {
             title: const Text('EXAMPLE'),
             centerTitle: true,
           ),
-          body: const Padding(
-            padding: EdgeInsets.all(16.0),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 64),
-                Text("⤣", style: TextStyle(fontSize: 48)),
-                Wrap(
+                const SizedBox(height: 64),
+                const Text("⤣", style: TextStyle(fontSize: 48)),
+                const Wrap(
                   children: [
                     Text('Click on '),
                     SizedBox(width: 8),
@@ -63,6 +64,11 @@ class MyApp extends StatelessWidget {
                     SizedBox(width: 8),
                     Text('in AppBar to show the menu'),
                   ],
+                ),
+                const SizedBox(height: 32),
+                TextButton(
+                  onPressed: (){ debugPrint('POINTER NOT ABSORBED'); },
+                  child: const Text('ABSORB POINTER TEST')
                 )
               ],
             ),
@@ -77,11 +83,11 @@ class MyApp extends StatelessWidget {
               accountName: Text('Vlad Petrov', style: Theme.of(context).textTheme.titleMedium),
               accountEmail: Text('petrov.vladislav1992@gmail.com', style: Theme.of(context).textTheme.bodyMedium)
             ),
-            
+            TextButton(onPressed: (){ debugPrint('Menu item tap'); }, child: Text('TEST')),
             ListTile(
               leading: Icon(Icons.access_time_filled),
               title: Text('Some Time', style: Theme.of(context).textTheme.titleMedium,),
-              onTap: (){},
+              onTap: (){ debugPrint('Menu item tap');},
             ),
 
             ListTile(

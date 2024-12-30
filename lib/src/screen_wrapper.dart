@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:fancy_side_menu/src/screen_wrapper_controller.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/change_notifier.dart';
 
@@ -35,6 +36,9 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
   late Animation<double> _scaleAnim;
   late Animation<double> _pivotAnim;
 
+  double _dragStartPoint = 0;
+  double _dragUpdatePoint = 0;
+
   @override
   void initState() {
     widget.controller.connectState(this);
@@ -61,9 +65,7 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
   void showMenu(){
     ModalRoute.of(context)?.registerPopEntry(this);
     _animController.forward();
-    setState(() {
-      _isMenuOpened = true;
-    });
+    setState(() { _isMenuOpened = true; });
     /*setState(() {
       _isMenuOpened = !_isMenuOpened;
     });*/
@@ -92,14 +94,42 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
     return false;
   }
 
+  void _handleDragStart(DragStartDetails info){
+    if(!_isMenuOpened){return;}
+    _dragStartPoint = info.globalPosition.dx;
+    _dragUpdatePoint = info.globalPosition.dx;
+    debugPrint('DRAG START: $info');
+  }
+
+  void _handleDragUpdate(DragUpdateDetails info){
+    if(!_isMenuOpened){return;}
+    _dragUpdatePoint += info.delta.dx;
+    final dragPosition = (_dragUpdatePoint / widget.menuWidth).clamp(0.0, 1.0);
+    _animController.value = dragPosition;
+  }
+
+  void _handleDragEnd(DragEndDetails info){
+    if(!_isMenuOpened){return;}
+    final dragPosition = (_dragUpdatePoint / widget.menuWidth).clamp(0.0, 1.0);
+    if(dragPosition >= 0.5){
+      _animController.forward(from: dragPosition);
+      setState(() { _isMenuOpened = true; });
+    }else{
+      _animController.reverse(from: dragPosition);
+      setState(() { _isMenuOpened = false; });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTapDown: _isMenuOpened ?(details){
         final xPosition = details.globalPosition.dx;
         if(xPosition >= widget.menuWidth) { hideMenu(); }
       } : null,
+      onHorizontalDragStart: _isMenuOpened ? _handleDragStart : null,
+      onHorizontalDragEnd: _isMenuOpened ? _handleDragEnd : null,
+      onHorizontalDragUpdate: _isMenuOpened ?  _handleDragUpdate : null,
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -123,7 +153,6 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
             transform: Matrix4.identity()
               ..setEntry(3, 2, .001)
               ..rotateY(_pivotAnim.value),
-            //offset: Offset(_translateAnim.value * 200, 0),
             child: Transform.translate(
               offset: Offset(
                 _translateAnim.value * widget.menuWidth,
@@ -133,13 +162,16 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
                 scale: _scaleAnim.value,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(_translateAnim.value * 24),
-                  child: widget.scaffold
+                  child: AbsorbPointer(
+                    absorbing: _isMenuOpened,
+                    child: widget.scaffold
+                  )
                 )
               ),
             ),
-          )
+            ),
         ],
-      ),
+        ),
     );
   }
 
