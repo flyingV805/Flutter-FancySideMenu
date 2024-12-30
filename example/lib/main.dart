@@ -41,9 +41,7 @@ class MyApp extends StatelessWidget {
         scaffold: Scaffold(
           appBar: AppBar(
             leading: IconButton(
-              onPressed: (){
-                controller.showMenu();
-              },
+              onPressed: (){ controller.showMenu(); },
               icon: const Icon(Icons.menu)
             ),
             title: const Text('EXAMPLE'),
@@ -83,36 +81,32 @@ class MyApp extends StatelessWidget {
               accountName: Text('Vlad Petrov', style: Theme.of(context).textTheme.titleMedium),
               accountEmail: Text('petrov.vladislav1992@gmail.com', style: Theme.of(context).textTheme.bodyMedium)
             ),
-            TextButton(onPressed: (){ debugPrint('Menu item tap'); }, child: Text('TEST')),
             ListTile(
-              leading: Icon(Icons.access_time_filled),
+              leading: const Icon(Icons.access_time_filled),
               title: Text('Some Time', style: Theme.of(context).textTheme.titleMedium,),
               onTap: (){ debugPrint('Menu item tap');},
             ),
-
             ListTile(
-              leading: Icon(Icons.access_time_filled),
-              title: Text('Some Time'),
+              leading: const Icon(Icons.access_time_filled),
+              title: const Text('Some Time'),
               onTap: (){},
             ),
             ListTile(
-              leading: Icon(Icons.access_time_filled),
-              title: Text('Some Time'),
+              leading: const Icon(Icons.access_time_filled),
+              title: const Text('Some Time'),
               onTap: (){},
             ),
             ListTile(
-              leading: Icon(Icons.access_time_filled),
-              title: Text('Some Time'),
+              leading: const Icon(Icons.access_time_filled),
+              title: const Text('Some Time'),
               onTap: (){},
             ),
-            Divider(),
+            const Divider(),
             ListTile(
-              leading: Icon(Icons.access_time_filled),
-              title: Text('Leave'),
+              leading: const Icon(Icons.access_time_filled),
+              title: const Text('Leave'),
               onTap: (){},
             )
-            
-            //Text('sdfsdfsdfsdf')
           ],
         )
       ),

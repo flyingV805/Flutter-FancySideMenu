@@ -1,9 +1,5 @@
-import 'dart:math';
-
 import 'package:fancy_side_menu/src/screen_wrapper_controller.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/change_notifier.dart';
 
 class ScreenWrapper extends StatefulWidget {
 
@@ -36,7 +32,6 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
   late Animation<double> _scaleAnim;
   late Animation<double> _pivotAnim;
 
-  double _dragStartPoint = 0;
   double _dragUpdatePoint = 0;
 
   @override
@@ -86,17 +81,16 @@ class ScreenWrapperState extends State<ScreenWrapper> with SingleTickerProviderS
     });
   }
 
-  bool _handleBackLogic(){
+  /*bool _handleBackLogic(){
     if (_isMenuOpened){
       hideMenu();
       return true;
     }
     return false;
-  }
+  }*/
 
   void _handleDragStart(DragStartDetails info){
     if(!_isMenuOpened){return;}
-    _dragStartPoint = info.globalPosition.dx;
     _dragUpdatePoint = info.globalPosition.dx;
     debugPrint('DRAG START: $info');
   }

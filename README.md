@@ -14,7 +14,20 @@ TBA
 TBA
 
 ```dart
-const like = 'sample';
+final ScreenWrapperController controller = ScreenWrapperController();
+//Current route root widget
+ScreenWrapper(
+  backgroundColor: switch(Theme.of(context).brightness){
+    Brightness.dark => const Color(0xff290033),
+    Brightness.light => const Color(0xffe2a6fa),
+  },
+  controller: controller,
+  //your main screen content
+  scaffold: Scaffold(),
+  //your side menu content
+  sideMenu: Column()
+)
+
 ```
 
 ## Roadmap
@@ -23,9 +36,10 @@ const like = 'sample';
 
 ✅ 'Back' button handler
 
-⚒️ GestureDetector for closing 
+✅ GestureDetector for closing
 
+✅ GestureDetector for dragging
 
 ## Additional information
 
-TBA
+Inspired by [This Wonderful Tutorial](https://www.youtube.com/watch?v=Z37ukFI4Ot0)
