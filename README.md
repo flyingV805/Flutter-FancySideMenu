@@ -7,11 +7,9 @@ Side menu with 3D effect for your Flutter application
 
 ## Getting started
 
-TBA
+Nothing fancy (😒got it?), just add the package to your project's dependencies.
 
 ## Usage
-
-TBA
 
 ```dart
 final ScreenWrapperController controller = ScreenWrapperController();
