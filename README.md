@@ -7,7 +7,14 @@ Side menu with 3D effect for your Flutter application
 
 ## Getting started
 
-Nothing fancy (😒got it?), just add the package to your project's dependencies.
+#### The package will be added to pub.dev a little later
+
+Nothing fancy (😒got it?), just add the package to your project's dependencies:
+```yaml
+  fancy_side_menu:
+    git:
+      url: https://github.com/flyingV805/Flutter-FancySideMenu.git
+```
 
 ## Usage
 
